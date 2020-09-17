@@ -19,9 +19,8 @@
 /**
  * Recursive directory creation.
  * @param path Directory path
- * @param level Always set to 0.
  * @return 0 if successful, -1 otherwise.
  */
-int mkdir_r(const char *const path, int level);
+int mkdir_r(const char *const path);
 
 #endif /* MKDIR_R_H */

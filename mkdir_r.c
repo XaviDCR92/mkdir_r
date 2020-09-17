@@ -23,7 +23,7 @@
 #include <errno.h>
 #include <stdio.h>
 
-int mkdir_r(const char *const path, int level)
+static int mkdir_r_lvl(const char *const path, int level)
 {
     int ret = -1;
     char *dir = NULL;
@@ -65,7 +65,7 @@ int mkdir_r(const char *const path, int level)
     }
 
     if (*c)
-        mkdir_r(path, cur_level);
+        mkdir_r_lvl(path, cur_level);
 
     /* No more levels left. */
     ret = 0;
@@ -78,4 +78,9 @@ exit:
         closedir(d);
 
     return ret;
+}
+
+int mkdir_r(const char *const path)
+{
+    return mkdir_r_lvl(path, 0);
 }
