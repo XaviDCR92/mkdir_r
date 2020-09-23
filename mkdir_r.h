@@ -20,6 +20,11 @@
  * Recursive directory creation.
  * @param path Directory path
  * @return 0 if successful, -1 otherwise.
+ * @note Sets @c errno to @c ENOMEM if internal dynamic allocation fails.
+ * @note Sets @c errno to @c EINVAL if an invalid or empty directory path is
+ * given.
+ * @note Sets @c errno to @c ENOTDIR if one of the elements from @c path is not
+ * a directory.
  */
 int mkdir_r(const char *const path);
 
