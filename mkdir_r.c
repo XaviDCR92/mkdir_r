@@ -14,13 +14,9 @@
    limitations under the License.
 */
 #include "mkdir_r.h"
+#include "mkdir_r_private.h"
 #include <string.h>
 #include <stdlib.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <errno.h>
 #include <stdio.h>
 #include <errno.h>
 
@@ -66,19 +62,7 @@ int mkdir_r(const char *const path)
                 if (!*dir)
                     /* Path starting with delimiter character. */
                     ;
-                else if (!access(dir, 0))
-                {
-                    struct stat sb;
-
-                    if (stat(dir, &sb))
-                        goto exit;
-                    else if (!(sb.st_mode & S_IFDIR))
-                    {
-                        errno = ENOTDIR;
-                        goto exit;
-                    }
-                }
-                else if (mkdir(dir, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH))
+                else if (mkdir_r_port(dir))
                     goto exit;
 
                 dir = dup;

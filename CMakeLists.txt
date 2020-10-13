@@ -12,5 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 project(mkdir_r)
-add_library(${PROJECT_NAME} STATIC "mkdir_r.c")
+set(srcs "mkdir_r.c")
+
+if(WIN32)
+    set(${srcs} "${srcs}" "win32.c")
+else()
+    set(${srcs} "${srcs}" "posix.c")
+endif()
+
+add_library(${PROJECT_NAME} STATIC ${srcs})
 target_include_directories(${PROJECT_NAME} PUBLIC ".")
+target_include_directories(${PROJECT_NAME} PRIVATE "private_include")
