@@ -15,9 +15,9 @@ project(mkdir_r)
 set(srcs "mkdir_r.c")
 
 if(WIN32)
-    set(${srcs} "${srcs}" "win32.c")
+    set(srcs ${srcs} "win32.c")
 else()
-    set(${srcs} "${srcs}" "posix.c")
+    set(srcs ${srcs} "posix.c")
 endif()
 
 add_library(${PROJECT_NAME} STATIC ${srcs})
